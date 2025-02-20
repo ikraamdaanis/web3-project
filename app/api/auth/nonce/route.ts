@@ -6,7 +6,7 @@ import nacl from "tweetnacl";
 import type { Nonce } from "types";
 
 // Note: This is for demonstration purposes only and won't scale in production
-export const nonceStore: Record<string, Nonce> = {};
+const nonceStore: Record<string, Nonce> = {};
 
 /**
  * @url /api/auth/nonce?walletAddress=${walletAddress}
