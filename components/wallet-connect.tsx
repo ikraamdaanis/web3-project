@@ -59,7 +59,7 @@ export const WalletConnect = () => {
   }, [walletLoaded, publicKey, connection]);
 
   return (
-    <Card className="mx-auto min-h-[360px] w-[600px] max-w-[calc(100vw-2rem)] rounded-2xl border-zinc-600 bg-zinc-900">
+    <Card className="mx-auto min-h-[360px] w-[600px] max-w-[calc(100vw-2rem)] rounded-2xl border-zinc-700 bg-zinc-900">
       <CardContent className="flex h-full flex-col items-center gap-4 p-4">
         {walletLoaded ? (
           <>
