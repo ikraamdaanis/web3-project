@@ -1,9 +1,12 @@
 import type { Connection, PublicKey } from "@solana/web3.js";
 import { Button } from "components/ui/button";
 import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import { toast } from "sonner";
+import { cn } from "utils/cn";
 
-const LAMPORTS_PER_SOL = 1000000000;
+/** 1 SOL = 1 billion lamports */
+const LAMPORTS_PER_SOL = 1_000_000_000;
 
 export const AddSol = ({
   publicKey,
@@ -14,38 +17,72 @@ export const AddSol = ({
 }) => {
   const router = useRouter();
 
-  const getAirdrop = async () => {
+  const [pending, startTransition] = useTransition();
+
+  async function getAirdrop() {
     if (!publicKey) return;
 
-    try {
-      const signature = await connection.requestAirdrop(
-        publicKey,
-        LAMPORTS_PER_SOL // 1 SOL = 1 billion lamports
-      );
+    startTransition(async () => {
+      const toastId = toast.loading("Requesting airdrop...");
 
-      await connection.confirmTransaction(signature);
+      try {
+        const signature = await connection.requestAirdrop(
+          publicKey,
+          LAMPORTS_PER_SOL
+        );
 
-      // Refresh balance
+        const latestBlockhash = await connection.getLatestBlockhash();
 
-      toast.success("1 SOL has been airdropped to your wallet");
+        await connection.confirmTransaction({
+          signature,
+          blockhash: latestBlockhash.blockhash,
+          lastValidBlockHeight: latestBlockhash.lastValidBlockHeight
+        });
 
-      router.refresh();
-    } catch (error) {
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "An unknown error occurred while requesting airdrop"
-      );
-    }
-  };
+        toast.success("1 SOL has been airdropped to your wallet", {
+          id: toastId
+        });
 
-  // Add this button where you want it to appear:
+        router.refresh();
+      } catch (error) {
+        const tooManyAirdropsError =
+          error instanceof Error &&
+          error.message.includes("your airdrop limit") ? (
+            <p>
+              You&apos;ve either reached your airdrop limit today or the airdrop
+              faucet has run dry. Please visit{" "}
+              <a
+                href="https://faucet.solana.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+              >
+                https://faucet.solana.com
+              </a>{" "}
+              for alternate sources of test SOL.
+            </p>
+          ) : null;
+
+        toast.error(
+          error instanceof Error
+            ? tooManyAirdropsError || error.message
+            : "An unknown error occurred while requesting airdrop",
+          { id: toastId }
+        );
+      }
+    });
+  }
+
   return (
     <Button
       onClick={getAirdrop}
-      className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700"
+      disabled={pending}
+      className={cn(
+        "rounded-sm bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700",
+        pending && "opacity-50"
+      )}
     >
-      Get Test SOL
+      Get Test SOL ◎
     </Button>
   );
 };

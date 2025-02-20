@@ -21,17 +21,21 @@ export const WalletConnect = () => {
   const [balance, setBalance] = useState<number | null>(null);
 
   useEffect(() => {
-    if (loaded && connected && publicKey) {
-      setBalanceLoading(true);
-      connection
-        .getBalance(publicKey)
-        .then(bal => {
-          setBalance(bal / LAMPORTS_PER_SOL);
-        })
-        .finally(() => {
+    async function fetchBalance() {
+      if (loaded && connected && publicKey) {
+        setBalanceLoading(true);
+
+        try {
+          const balance = await connection.getBalance(publicKey);
+
+          setBalance(balance / LAMPORTS_PER_SOL);
+        } finally {
           setBalanceLoading(false);
-        });
+        }
+      }
     }
+
+    fetchBalance();
   }, [loaded, connected, publicKey, connection]);
 
   const [transactionsLoading, setTransactionsLoading] = useState(true);
@@ -44,7 +48,8 @@ export const WalletConnect = () => {
       connection
         .getSignaturesForAddress(publicKey)
         .then(sigs => {
-          setTransactions(sigs.slice(0, 5)); // Get last 5 transactions
+          // Get last 5 transactions
+          setTransactions(sigs.slice(0, 5));
         })
         .finally(() => {
           setTransactionsLoading(false);
@@ -126,18 +131,19 @@ export const WalletConnect = () => {
           </>
         ) : (
           <div className="flex h-full min-h-[calc(336px)] w-full items-center justify-center rounded-xl bg-zinc-800">
-            {loaded ? (
-              <WalletMultiButton
-                style={{
-                  height: "48px",
-                  width: "200px",
-                  textAlign: "center",
-                  transition: "background-color 0.3s ease-in-out"
-                }}
-              />
-            ) : (
-              <Skeleton className="h-12 w-[200px] bg-zinc-800" />
-            )}
+            <div className="flex h-12 min-w-[152px] items-center justify-center rounded-md bg-[#512da8]">
+              {loaded ? (
+                <WalletMultiButton
+                  style={{
+                    height: "48px",
+                    textAlign: "center",
+                    transition: "background-color 0.3s ease-in-out"
+                  }}
+                />
+              ) : (
+                <Skeleton className="h-12 w-[152px] bg-zinc-700" />
+              )}
+            </div>
           </div>
         )}
       </CardContent>
