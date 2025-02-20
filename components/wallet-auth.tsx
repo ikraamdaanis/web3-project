@@ -100,8 +100,7 @@ export const WalletAuth = () => {
       </Button>
       <p className="text-sm text-zinc-400">
         This will request a nonce from the server and sign it with your wallet.
-        For testing purposes, if you take more than 3 seconds to sign the nonce,
-        it will expire.
+        If you take more than 5 minutes to sign the nonce, it will expire.
       </p>
     </div>
   );

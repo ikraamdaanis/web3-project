@@ -77,8 +77,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid nonce" }, { status: 400 });
   }
 
-  // Check if nonce is expired (3 seconds validity, for testing purposes)
-  if (Date.now() - storedNonce.createdAt > 3000) {
+  // Check if nonce is expired (5 minutes validity)
+  if (Date.now() - storedNonce.createdAt > 1000 * 60 * 5) {
     delete nonceStore[walletAddress];
     return NextResponse.json({ error: "Nonce expired" }, { status: 400 });
   }
