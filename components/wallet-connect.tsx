@@ -7,6 +7,7 @@ import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { AddSol } from "components/add-sol";
 import { Card, CardContent } from "components/ui/card";
 import { Skeleton } from "components/ui/skeleton";
+import { WalletAuth } from "components/wallet-auth";
 import { useLoaded } from "hooks/use-loaded";
 import { useEffect, useState } from "react";
 import { cn } from "utils/cn";
@@ -58,11 +59,11 @@ export const WalletConnect = () => {
   }, [walletLoaded, publicKey, connection]);
 
   return (
-    <Card className="min-h-[360px] w-[600px] rounded-2xl border-zinc-600 bg-zinc-900">
+    <Card className="mx-auto min-h-[360px] w-[600px] max-w-[calc(100vw-2rem)] rounded-2xl border-zinc-600 bg-zinc-900">
       <CardContent className="flex h-full flex-col items-center gap-4 p-4">
         {walletLoaded ? (
           <>
-            <div className="flex h-full min-h-[140px] w-full items-center gap-4">
+            <div className="flex h-full min-h-[140px] w-full flex-col items-center gap-4 sm:flex-row">
               <div className="flex min-h-[140px] w-full flex-col justify-between gap-2 rounded-xl bg-zinc-800 p-4">
                 <h2 className="text-lg font-medium text-offwhite">Balance</h2>
                 <section className="flex w-full items-end justify-between gap-2 text-2xl font-semibold text-offwhite">
@@ -93,7 +94,10 @@ export const WalletConnect = () => {
                     {Array.from({ length: 3 }).map((_, index) => (
                       <div
                         key={index}
-                        className="flex w-full flex-col items-start gap-2 text-sm text-offwhite"
+                        className={cn(
+                          "flex w-full flex-col items-start gap-3 text-sm text-offwhite",
+                          index !== 2 && "border-b border-zinc-700 pb-3"
+                        )}
                       >
                         <Skeleton className="h-4 w-[240px] bg-zinc-700" />
                         <Skeleton className="h-4 w-full bg-zinc-700" />
@@ -127,6 +131,9 @@ export const WalletConnect = () => {
                   ))
                 )}
               </ul>
+            </div>
+            <div className="flex h-full w-full flex-col gap-4 rounded-xl bg-zinc-800 p-4">
+              <WalletAuth />
             </div>
           </>
         ) : (
