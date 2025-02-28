@@ -5,6 +5,7 @@ import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import type { ConfirmedSignatureInfo } from "@solana/web3.js";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { AddSol } from "components/add-sol";
+import { StakeSolModal } from "components/stake-sol-modal";
 import { Card, CardContent } from "components/ui/card";
 import { Skeleton } from "components/ui/skeleton";
 import { WalletAuth } from "components/wallet-auth";
@@ -134,6 +135,9 @@ export const WalletConnect = () => {
             </div>
             <div className="flex h-full w-full flex-col gap-4 rounded-xl bg-zinc-800 p-4">
               <WalletAuth />
+            </div>
+            <div className="flex h-full w-full flex-col gap-4 rounded-xl bg-zinc-800 p-4">
+              <StakeSolModal />
             </div>
           </>
         ) : (
