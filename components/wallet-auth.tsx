@@ -90,12 +90,7 @@ export const WalletAuth = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <Button
-        onClick={handleAuthenticate}
-        disabled={pending}
-        size="lg"
-        className="rounded bg-[#512da8] px-4 py-2 font-medium text-white transition hover:bg-[#512da8]/80 disabled:opacity-50"
-      >
+      <Button onClick={handleAuthenticate} disabled={pending} size="lg">
         Request Nonce
       </Button>
       <p className="text-sm text-zinc-400">
