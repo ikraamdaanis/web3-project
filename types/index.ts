@@ -20,12 +20,14 @@ export const TimelockBoostLabels = {
 };
 
 /**
+ * Interface Description Language (IDL)
+ *
  * Program IDL in camelCase format in order to be used in JS/TS.
  *
  * Note that this is only a type helper and is not the actual IDL. The original
  * IDL can be found at `staking-devnet.json`.
  */
-export type PgnStaking = {
+export type Idl = {
   address: "8icXpLgEgEVVbvhTAgL7W7AUMZbaUh1UJ1czMiQXCuVE";
   metadata: {
     name: "pgnStaking";
