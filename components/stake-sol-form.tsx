@@ -64,7 +64,7 @@ export function StakeSolForm({ onClose }: { onClose: () => void }) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       amount: "",
-      timelockBoost: TimelockBoost.NoLock
+      timelockBoost: TimelockBoost.OneMonth
     }
   });
 
