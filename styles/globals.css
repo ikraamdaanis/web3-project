@@ -85,6 +85,15 @@
   }
 }
 
+.wallet-adapter-button {
+  font-weight: 500;
+  min-width: 152px;
+}
+
 .wallet-adapter-button:hover {
   background-color: #41218a !important;
+}
+
+.wallet-adapter-button:focus-visible {
+  outline: none;
 }
