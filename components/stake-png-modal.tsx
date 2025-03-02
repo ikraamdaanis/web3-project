@@ -1,6 +1,6 @@
 "use client";
 
-import { StakeSolForm } from "components/stake-sol-form";
+import { StakePngForm } from "components/stake-png-form";
 import { Button } from "components/ui/button";
 import {
   Dialog,
@@ -13,24 +13,24 @@ import {
 import { useState } from "react";
 
 /**
- * Modal that houses the form for a user to stake SOL.
+ * Modal that houses the form for a user to stake PNG tokens.
  */
-export const StakeSolModal = () => {
+export const StakePngModal = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="lg">Stake SOL</Button>
+        <Button size="lg">Stake PNG</Button>
       </DialogTrigger>
       <DialogContent className="w-[500px] max-w-[95vw] bg-zinc-900">
         <DialogHeader>
           <DialogTitle>Stake Tokens</DialogTitle>
           <DialogDescription>
-            Stake your SOL tokens to earn rewards
+            Stake your PNG tokens to earn rewards
           </DialogDescription>
         </DialogHeader>
-        <StakeSolForm onClose={() => setOpen(false)} />
+        <StakePngForm onClose={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );

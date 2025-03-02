@@ -54,7 +54,7 @@ const formSchema = z.object({
  * stake account for a specified period of time. The user can choose between
  * different lock periods, each with a different reward rate.
  */
-export function StakeSolForm({ onClose }: { onClose: () => void }) {
+export function StakePngForm({ onClose }: { onClose: () => void }) {
   const { connection } = useConnection();
   const { publicKey } = useWallet();
   const anchorWallet = useAnchorWallet();
@@ -124,7 +124,7 @@ export function StakeSolForm({ onClose }: { onClose: () => void }) {
 
         /**
          * Convert the amount to a BigNumber object.
-         * 1 SOL = 1,000,000,000 (1 billion) lamports.
+         * 1 PNG = 1,000,000,000 (1 billion) lamports.
          */
         const amountBigNumber = new BN(parseFloat(values.amount) * 1e9);
         const timelockBoostArg = { [values.timelockBoost]: {} };
