@@ -12,6 +12,11 @@ import { WalletAuth } from "components/wallet-auth";
 import { useLoaded } from "hooks/use-loaded";
 import { useEffect, useState } from "react";
 
+/**
+ * The main component for the wallet connection and balance display.
+ * Displays the user's balance and a button to connect their wallet.
+ * Also displays recent transactions and a form to stake PNG tokens.
+ */
 export const WalletConnect = () => {
   const { publicKey, connected } = useWallet();
   const { connection } = useConnection();
